@@ -281,11 +281,3 @@ elif(selected == 'About'):
     """, unsafe_allow_html=True)
 
     st.markdown('<p class="big-font">StockStream is a web application that allows users to view Stock Performance Comparison, Real-Time Stock Prices, Stock Price Prediction, and Stock Price Analysis. The application is developed using Python, Plotly, and Streamlit. Its developed by Vaishnavi Sharma and Rohit More. Its code is available on GitHub. Its built on top of Streamlit- a Python framework for building web applications, Plotly- a Python library for creating charts, Yahoo Finance API- a Python library for fetching stock data, Prophet- a Python library for predicting stock prices.</p>', unsafe_allow_html=True)
-
-    
-    # st.markdown("""
-    # StockStream is a web application that allows users to view Real-Time Stock Prices, Stock Price Prediction, and Stock Price Analysis. 
-    # The application is developed using Python, Plotly, and Streamlit.
-    # Its developed by Vaishnavi Sharma and Rohit More.
-    # Its code is available on GitHub. 
-    # Its built on top of Streamlit, a Python framework for building web applications, Plotly, a Python library for creating charts, Yahoo Finance API, a Python library for fetching stock data, Prophet, a Python library for predicting stock prices.""")
