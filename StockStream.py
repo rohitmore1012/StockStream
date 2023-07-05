@@ -15,6 +15,18 @@ import time  # time library
 from streamlit_option_menu import option_menu  # select_options library
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+
+def add_meta_tag():
+    meta_tag = """
+        <head>
+            <meta name="google-site-verification" content="QBiAoAo1GAkCBe1QoWq-dQ1RjtPHeFPyzkqJqsrqW-s" />
+        </head>
+    """
+    st.markdown(meta_tag, unsafe_allow_html=True)
+
+# Main code
+add_meta_tag()
+
 # Sidebar Section Starts Here
 today = date.today()  # today's date
 st.write('''# StockStream ''')  # title
