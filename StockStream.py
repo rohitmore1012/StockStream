@@ -14,18 +14,12 @@ from prophet.plot import plot_plotly
 import time  # time library
 from streamlit_option_menu import option_menu  # select_options library
 
-st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 st.set_page_config(
     page_title="StockStream",
     page_icon="path/to/your/favicon.ico",
     layout="wide"
 )
-# Display the verification HTML file
-st.markdown('<iframe src="/static/verification.html" width="100%" height="600"></iframe>', unsafe_allow_html=True)
-
-
-
 
 # Sidebar Section Starts Here
 today = date.today()  # today's date
@@ -286,3 +280,6 @@ elif(selected == 'About'):
     st.markdown('<p class="big-font">StockStream is a web application that allows users to visualize Stock Performance Comparison, Real-Time Stock Prices and Stock Price Prediction. This application is developed using Streamlit. Streamlit is an open source app framework in Python language. It helps users to create web apps for Data Science and Machine Learning in a short time. This Project is developed by Vaishnavi Sharma and Rohit More. You can find more about the developers on their GitHub Profiles shared below.<br>Hope you are able to employ this application well and get your desired output.<br> Cheers!</p>', unsafe_allow_html=True)
     st.subheader('Rohit More [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/rohitmore1012) ')
     st.subheader('Vaishnavi Sharma [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/vaishnavi3131) ')
+
+# Display the verification HTML file
+st.markdown('<iframe src="/static/verification.html" width="100%" height="600"></iframe>', unsafe_allow_html=True)
