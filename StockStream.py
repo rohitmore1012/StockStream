@@ -2,6 +2,13 @@
 
 from matplotlib.pyplot import axis
 import streamlit as st  # streamlit library
+
+st.set_page_config(
+    page_title="StockStream",
+    page_icon="path/to/your/favicon.ico",
+    layout="wide"
+)
+
 import pandas as pd  # pandas library
 import yfinance as yf  # yfinance library
 import datetime  # datetime library
@@ -14,12 +21,6 @@ from prophet.plot import plot_plotly
 import time  # time library
 from streamlit_option_menu import option_menu  # select_options library
 
-
-st.set_page_config(
-    page_title="StockStream",
-    page_icon="path/to/your/favicon.ico",
-    layout="wide"
-)
 
 # Sidebar Section Starts Here
 today = date.today()  # today's date
