@@ -31,6 +31,7 @@ end = st.sidebar.date_input('End', datetime.date.today())  # end date input
 # Sidebar Section Ends Here
 
 # read csv file
+header=0
 stock_df = pd.read_csv("StockStreamTickersData.csv")
 
 # Stock Performance Comparison Section Starts Here
