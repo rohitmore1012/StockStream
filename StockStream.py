@@ -14,7 +14,7 @@ from prophet.plot import plot_plotly
 import time  # time library
 from streamlit_option_menu import option_menu  # select_options library
 
-st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(layout="wide", initial_sidebar_state="expanded", static_folder="static")
 # Sidebar Section Starts Here
 today = date.today()  # today's date
 st.write('''# StockStream ''')  # title
