@@ -282,4 +282,5 @@ elif(selected == 'About'):
     st.subheader('Vaishnavi Sharma [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/vaishnavi3131) ')
 
 # Display the verification HTML file
-st.markdown('<iframe src="/static/verification.html" width="100%" height="600"></iframe>', unsafe_allow_html=True)
+st.markdown('<iframe src="https://stockstream.streamlit.app/static/verification.html" width="100%" height="600"></iframe>', unsafe_allow_html=True)
+
