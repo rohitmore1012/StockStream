@@ -5,7 +5,6 @@ import streamlit as st  # streamlit library
 
 st.set_page_config(
     page_title="StockStream",
-    page_icon="path/to/your/favicon.ico",
     layout="wide"
 )
 
