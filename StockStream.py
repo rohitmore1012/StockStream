@@ -289,3 +289,4 @@ elif(selected == 'About'):
     # Its developed by Vaishnavi Sharma and Rohit More.
     # Its code is available on GitHub. 
     # Its built on top of Streamlit, a Python framework for building web applications, Plotly, a Python library for creating charts, Yahoo Finance API, a Python library for fetching stock data, Prophet, a Python library for predicting stock prices.""")
+
