@@ -19,8 +19,8 @@ st.set_page_config(
     page_icon="path/to/your/favicon.ico",
     layout="wide"
 )
-# Serve the static files
-st.static('/static')
+# Display the verification HTML file
+st.markdown('<iframe src="/static/verification.html" width="100%" height="600"></iframe>', unsafe_allow_html=True)
 
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
