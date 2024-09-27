@@ -1,7 +1,7 @@
 matplotlib==3.8.0
 pandas==2.1.1
 plotly==5.17.0
-prophet==1.2
+prophet==1.1.5
 streamlit==1.25.0
 streamlit-option-menu==0.4.3
 yfinance==0.2.30
