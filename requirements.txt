@@ -1,7 +1,7 @@
-matplotlib==3.5.2
-pandas==1.4.3
-plotly==5.9.0
-prophet==1.1.4
-streamlit==1.11.0
-streamlit_option_menu==0.3.2
-yfinance==0.1.74
+matplotlib==3.8.0
+pandas==2.1.1
+plotly==5.17.0
+prophet==1.2
+streamlit==1.25.0
+streamlit-option-menu==0.4.3
+yfinance==0.2.30
