@@ -2,18 +2,19 @@ import streamlit as st
 import pandas as pd
 import datetime
 from datetime import date
+from plotly import graph_objs as go
+from plotly.subplots import make_subplots
+from prophet import Prophet
+from prophet.plot import plot_plotly
 import time
 from streamlit_option_menu import option_menu
 import os
+os.environ["YFINANCE_CACHE_DIR"] = "/tmp"
 import yfinance as yf
 
-# Set cache directory for yfinance
-os.environ["YFINANCE_CACHE_DIR"] = "/tmp"
 
-# Streamlit configuration
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
-# Function to add meta tag
 def add_meta_tag():
     meta_tag = """
         <head>
@@ -37,40 +38,6 @@ end = st.sidebar.date_input('End', datetime.date.today())
 
 stock_df = pd.read_csv("StockStreamTickersData.csv")
 
-def plot_lightweight_chart(data, title):
-    """Create and display a Lightweight Chart."""
-    chart_data = [
-        {"time": row["Date"].strftime("%Y-%m-%d"), "value": row["Close"]}
-        for index, row in data.iterrows()
-    ]
-    
-    html_code = f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-    </head>
-    <body>
-        <div id="chart" style="width: 100%; height: 400px;"></div>
-        <script>
-            const chart = LightweightCharts.createChart(document.getElementById('chart'), {{
-                width: 600,
-                height: 400,
-                layout: {{
-                    backgroundColor: '#ffffff',
-                    textColor: '#000'
-                }},
-            }});
-
-            const lineSeries = chart.addLineSeries();
-            lineSeries.setData({chart_data});
-        </script>
-    </body>
-    </html>
-    """
-    st.components.v1.html(html_code, height=450)
-
 if selected == 'Stocks Performance Comparison':
     st.subheader("Stocks Performance Comparison")
     tickers = stock_df["Company Name"]
@@ -90,21 +57,40 @@ if selected == 'Stocks Performance Comparison':
     if dropdown:
         df = relativeret(yf.download(symb_list, start, end))['Adj Close']
         raw_df = relativeret(yf.download(symb_list, start, end)).reset_index()
+
+        closingPrice = yf.download(symb_list, start, end)['Adj Close']
+        volume = yf.download(symb_list, start, end)['Volume']
         
         st.subheader(f'Raw Data {dropdown}')
         st.write(raw_df)
+        chart = ('Line Chart', 'Area Chart', 'Bar Chart')
+        dropdown1 = st.selectbox('Pick your chart', chart)
 
-        if dropdown:
-            st.subheader(f'Relative Returns {dropdown}')
-            plot_lightweight_chart(df.reset_index(), 'Relative Returns')
+        with st.spinner('Loading...'):
+            time.sleep(2)
 
-            closingPrice = yf.download(symb_list, start, end)['Adj Close']
+        st.subheader(f'Relative Returns {dropdown}')
+        
+        if dropdown1 == 'Line Chart':
+            st.line_chart(df)
             st.write(f"### Closing Price of {dropdown}")
-            plot_lightweight_chart(closingPrice.reset_index(), 'Closing Price')
-
-            volume = yf.download(symb_list, start, end)['Volume']
+            st.line_chart(closingPrice)
             st.write(f"### Volume of {dropdown}")
-            plot_lightweight_chart(volume.reset_index(), 'Volume')
+            st.line_chart(volume)
+
+        elif dropdown1 == 'Area Chart':
+            st.area_chart(df)
+            st.write(f"### Closing Price of {dropdown}")
+            st.area_chart(closingPrice)
+            st.write(f"### Volume of {dropdown}")
+            st.area_chart(volume)
+
+        elif dropdown1 == 'Bar Chart':
+            st.bar_chart(df)
+            st.write(f"### Closing Price of {dropdown}")
+            st.bar_chart(closingPrice)
+            st.write(f"### Volume of {dropdown}")
+            st.bar_chart(volume)
     else:
         st.write('Please select at least one asset')
 
@@ -134,8 +120,25 @@ elif selected == 'Real-Time Stock Price':
             st.subheader(f'Raw Data of {a}')
             st.write(data)
 
-            st.subheader(f'Line Chart of {a}')
-            plot_lightweight_chart(data, 'Line Chart')
+            def plot_raw_data():
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
+                fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
+                fig.layout.update(title_text=f'Line Chart of {a}', xaxis_rangeslider_visible=True)
+                st.plotly_chart(fig)
+
+            def plot_candle_data():
+                fig = go.Figure()
+                fig.add_trace(go.Candlestick(x=data['Date'], open=data['Open'], high=data['High'], low=data['Low'], close=data['Close'], name='market data'))
+                fig.update_layout(title=f'Candlestick Chart of {a}', yaxis_title='Stock Price', xaxis_title='Date')
+                st.plotly_chart(fig)
+
+            chart = ('Candle Stick', 'Line Chart')
+            dropdown1 = st.selectbox('Pick your chart', chart)
+            if dropdown1 == 'Candle Stick':
+                plot_candle_data()
+            elif dropdown1 == 'Line Chart':
+                plot_raw_data()
 
 elif selected == 'Stock Prediction':
     st.subheader("Stock Prediction")
@@ -154,8 +157,14 @@ elif selected == 'Stock Prediction':
         st.subheader(f'Raw Data of {a}')
         st.write(data)
 
-        st.subheader(f'Line Chart of {a}')
-        plot_lightweight_chart(data, 'Line Chart')
+        def plot_raw_data():
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
+            fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
+            fig.layout.update(title_text=f'Time Series Data of {a}', xaxis_rangeslider_visible=True)
+            st.plotly_chart(fig)
+
+        plot_raw_data()
 
         n_years = st.slider('Years of prediction:', 1, 4)
         period = n_years * 365
@@ -169,8 +178,7 @@ elif selected == 'Stock Prediction':
         st.subheader(f'Forecast Data of {a}')
         st.write(forecast)
 
-        # Plot forecast (use Lightweight Charts or create a separate function for the forecast plot)
-        st.subheader(f'Forecast plot for {n_years} years (use Plotly for forecasting)')
+        st.subheader(f'Forecast plot for {n_years} years')
         fig1 = plot_plotly(m, forecast)
         st.plotly_chart(fig1)
 
