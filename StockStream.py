@@ -27,7 +27,7 @@ add_meta_tag()
 
 today = date.today()
 st.write('''# StockStream ''')
-st.sidebar.image("Images/StockStreamLogo1.png", width=250, use_column_width=False)
+# st.sidebar.image("Images/StockStreamLogo1.png", width=250, use_column_width=False)
 st.sidebar.write('''# StockStream ''')
 
 with st.sidebar:
