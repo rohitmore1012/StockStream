@@ -33,7 +33,7 @@ st.sidebar.write('''# StockStream ''')
 with st.sidebar:
     selected = option_menu("Utilities", ["Stocks Performance Comparison", "Real-Time Stock Price", "Stock Prediction", 'About'])
 
-start = st.sidebar.date_input('Start', datetime.date(2022, 1, 1))
+start = st.sidebar.date_input('Start', datetime.date(2015, 1, 1))
 end = st.sidebar.date_input('End', datetime.date.today())
 
 stock_df = pd.read_csv("StockStreamTickersData.csv")
