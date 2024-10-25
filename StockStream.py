@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import yfinance as yf
 import datetime
 from datetime import date
 from plotly import graph_objs as go
@@ -9,6 +8,10 @@ from prophet import Prophet
 from prophet.plot import plot_plotly
 import time
 from streamlit_option_menu import option_menu
+import os
+os.environ["YFINANCE_CACHE_DIR"] = "/tmp"
+import yfinance as yf
+
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
